@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scratch HTML Clone</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- 顶部导航栏 -->
+        <header class="header">
+            <div class="logo">
+                <h1>Scratch Clone</h1>
+            </div>
+            <div class="controls">
+                <button id="run-btn" class="run-btn">▶ 运行</button>
+                <button id="stop-btn" class="stop-btn">⏹ 停止</button>
+            </div>
+        </header>
+
+        <!-- 主要内容区域 -->
+        <div class="main-content">
+            <!-- 左侧块类别 -->
+            <aside class="block-categories">
+                <div class="category" data-category="motion">
+                    <div class="category-header motion-color">运动</div>
+                    <div class="category-blocks">
+                        <div class="block motion-block" data-type="move">
+                            移动 10 步
+                        </div>
+                        <div class="block motion-block" data-type="turn-right">
+                            右转 15 度
+                        </div>
+                        <div class="block motion-block" data-type="turn-left">
+                            左转 15 度
+                        </div>
+                        <div class="block motion-block editable-block" data-type="move-to">
+                            移动到 x: <input type="number" value="0" min="-100" max="100" class="x-input"> y: <input type="number" value="0" min="-100" max="100" class="y-input">
+                        </div>
+                        <div class="block motion-block editable-block" data-type="glide">
+                            在 <input type="number" value="2" min="0.1" max="10" step="0.1" class="duration-input"> 秒内滑行到随机位置
+                        </div>
+                    </div>
+                </div>
+
+                <div class="category" data-category="looks">
+                    <div class="category-header looks-color">外观</div>
+                    <div class="category-blocks">
+                        <div class="block looks-block" data-type="say">
+                            说 [Hello] 2 秒
+                        </div>
+                        <div class="block looks-block" data-type="show">
+                            显示
+                        </div>
+                        <div class="block looks-block" data-type="hide">
+                            隐藏
+                        </div>
+                        <div class="block looks-block editable-block" data-type="say-custom">
+                            说 <input type="text" value="你好！" class="say-text"> 持续 <input type="number" value="2" min="0.1" max="10" step="0.1" class="say-duration"> 秒
+                        </div>
+                        <div class="block looks-block editable-block" data-type="change-size">
+                            将大小改变 <input type="number" value="10" min="-50" max="50" class="size-change"> %
+                        </div>
+                    </div>
+                </div>
+
+                <div class="category" data-category="events">
+                    <div class="category-header events-color">事件</div>
+                    <div class="category-blocks">
+                        <div class="block events-block" data-type="when-clicked">
+                            当角色被点击
+                        </div>
+                        <div class="block events-block" data-type="when-green-flag">
+                            当绿旗被点击
+                        </div>
+                    </div>
+                </div>
+
+                <div class="category" data-category="control">
+                    <div class="category-header control-color">控制</div>
+                    <div class="category-blocks">
+                        <div class="block control-block editable-block" data-type="wait">
+                            等待 <input type="number" value="1" min="0.1" max="60" step="0.1" class="wait-input"> 秒
+                        </div>
+                        <div class="block control-block container-block" data-type="repeat">
+                            <div class="block-header">
+                                重复执行 <input type="number" value="10" min="1" max="999" class="repeat-input"> 次
+                            </div>
+                            <div class="block-container">
+                                <div class="container-placeholder">将积木拖拽到这里</div>
+                            </div>
+                            <div class="block-footer"></div>
+                        </div>
+                        <div class="block control-block container-block" data-type="forever">
+                            <div class="block-header">
+                                重复执行
+                            </div>
+                            <div class="block-container">
+                                <div class="container-placeholder">将积木拖拽到这里</div>
+                            </div>
+                            <div class="block-footer"></div>
+                        </div>
+                        <div class="block control-block container-block" data-type="if">
+                            <div class="block-header">
+                                如果 <select class="condition-select">
+                                    <option value="mouse-clicked">鼠标被点击</option>
+                                    <option value="key-pressed">按键被按下</option>
+                                    <option value="sprite-edge">碰到边缘</option>
+                                    <option value="always">总是</option>
+                                </select> 那么
+                            </div>
+                            <div class="block-container">
+                                <div class="container-placeholder">将积木拖拽到这里</div>
+                            </div>
+                            <div class="block-footer"></div>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- 中间工作区 -->
+            <main class="workspace">
+                <div class="workspace-header">
+                    <h3>代码区域</h3>
+                </div>
+                <div class="workspace-area" id="workspace">
+                    <!-- 拖拽的块将放置在这里 -->
+                </div>
+            </main>
+
+            <!-- 右侧舞台 -->
+            <aside class="stage">
+                <div class="stage-header">
+                    <h3>舞台</h3>
+                </div>
+                <div class="stage-area">
+                    <div id="sprite" class="sprite">
+                        🐱
+                    </div>
+                </div>
+                <div class="stage-controls">
+                    <button id="green-flag" class="green-flag">🚩</button>
+                </div>
+                
+                <!-- 运行信息展示区 -->
+                <div class="runtime-info">
+                    <div class="runtime-header">
+                        <h4>运行信息</h4>
+                        <button id="clear-log" class="clear-log-btn">清空</button>
+                    </div>
+                    <div class="runtime-content" id="runtime-log">
+                        <div class="log-entry log-info">系统已就绪</div>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

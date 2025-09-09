@@ -1,0 +1,654 @@
+/* 基础样式重置 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Microsoft YaHei', Arial, sans-serif;
+    background-color: #f5f5f5;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+/* 头部样式 */
+.header {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.logo h1 {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.controls {
+    display: flex;
+    gap: 10px;
+}
+
+.run-btn, .stop-btn {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.run-btn {
+    background-color: #45a049;
+    color: white;
+}
+
+.run-btn:hover {
+    background-color: #4CAF50;
+}
+
+.stop-btn {
+    background-color: #f44336;
+    color: white;
+}
+
+.stop-btn:hover {
+    background-color: #da190b;
+}
+
+/* 主要内容区域 */
+.main-content {
+    display: flex;
+    flex: 1;
+    height: calc(100vh - 60px);
+}
+
+/* 左侧块类别 */
+.block-categories {
+    width: 250px;
+    background-color: #fff;
+    border-right: 2px solid #ddd;
+    overflow-y: auto;
+    padding: 10px;
+    position: relative;
+}
+
+.category {
+    margin-bottom: 20px;
+}
+
+.category-header {
+    padding: 8px 12px;
+    color: white;
+    font-weight: bold;
+    border-radius: 4px 4px 0 0;
+    cursor: pointer;
+}
+
+.motion-color { background-color: #4CAF50; }
+.looks-color { background-color: #9C27B0; }
+.events-color { background-color: #FF9800; }
+.control-color { background-color: #FF5722; }
+
+.category-blocks {
+    padding: 10px;
+    background-color: #f9f9f9;
+    border-radius: 0 0 4px 4px;
+}
+
+/* 块样式 */
+.block {
+    padding: 8px 12px;
+    margin: 5px 0;
+    border-radius: 4px;
+    cursor: grab;
+    font-size: 12px;
+    user-select: none;
+    transition: transform 0.2s ease;
+    position: relative;
+}
+
+.block:hover {
+    transform: scale(1.05);
+}
+
+.block:active {
+    cursor: grabbing;
+}
+
+.motion-block {
+    background-color: #4CAF50;
+    color: white;
+    border-left: 4px solid #45a049;
+}
+
+.looks-block {
+    background-color: #9C27B0;
+    color: white;
+    border-left: 4px solid #7B1FA2;
+}
+
+.events-block {
+    background-color: #FF9800;
+    color: white;
+    border-left: 4px solid #F57C00;
+}
+
+.control-block {
+    background-color: #FF5722;
+    color: white;
+    border-left: 4px solid #D84315;
+}
+
+/* 中间工作区 */
+.workspace {
+    flex: 1;
+    background-color: #fafafa;
+    border-right: 2px solid #ddd;
+    display: flex;
+    flex-direction: column;
+}
+
+.workspace-header {
+    padding: 10px 20px;
+    background-color: #fff;
+    border-bottom: 1px solid #ddd;
+}
+
+.workspace-header h3 {
+    color: #333;
+    font-size: 16px;
+}
+
+.workspace-area {
+    flex: 1;
+    padding: 20px;
+    background-image: 
+        linear-gradient(rgba(0,0,0,0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,0,0,0.05) 1px, transparent 1px);
+    background-size: 20px 20px;
+    position: relative;
+    overflow: auto;
+}
+
+/* 右侧舞台 */
+.stage {
+    width: 300px;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.stage-header {
+    padding: 10px 15px;
+    background-color: #f5f5f5;
+    border-bottom: 1px solid #ddd;
+    border-radius: 4px 4px 0 0;
+}
+
+.stage-header h3 {
+    color: #333;
+    font-size: 16px;
+}
+
+.stage-area {
+    flex: 1;
+    background-color: #87CEEB;
+    position: relative;
+    border: 2px solid #4682B4;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 10px;
+}
+
+.sprite {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 48px;
+    transition: all 0.3s ease;
+}
+
+.stage-controls {
+    padding: 8px;
+    text-align: center;
+    background-color: #f5f5f5;
+    border-top: 1px solid #ddd;
+    border-radius: 0 0 4px 4px;
+    margin-bottom: 10px;
+}
+
+.green-flag {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 20px;
+    transition: background-color 0.3s ease;
+}
+
+.green-flag:hover {
+    background-color: #45a049;
+}
+
+/* 运行信息展示区 */
+.runtime-info {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+}
+
+.runtime-header {
+    padding: 8px 12px;
+    background-color: #f0f0f0;
+    border-bottom: 1px solid #ddd;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.runtime-header h4 {
+    font-size: 14px;
+    color: #333;
+    margin: 0;
+}
+
+.clear-log-btn {
+    padding: 4px 8px;
+    background-color: #f44336;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+.clear-log-btn:hover {
+    background-color: #d32f2f;
+}
+
+.runtime-content {
+    flex: 1;
+    padding: 8px;
+    overflow-y: auto;
+    font-family: 'Courier New', monospace;
+    font-size: 11px;
+    line-height: 1.4;
+    background-color: #fafafa;
+}
+
+.log-entry {
+    margin-bottom: 4px;
+    padding: 4px 6px;
+    border-radius: 3px;
+    border-left: 3px solid;
+    animation: slideIn 0.3s ease;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes bubbleAppear {
+    from {
+        opacity: 0;
+        transform: translateX(-50%) scale(0.8);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(-50%) scale(1);
+    }
+}
+
+@keyframes bubbleDisappear {
+    from {
+        opacity: 1;
+        transform: translateX(-50%) scale(1);
+    }
+    to {
+        opacity: 0;
+        transform: translateX(-50%) scale(0.8);
+    }
+}
+
+.log-info {
+    background-color: #e3f2fd;
+    border-left-color: #2196F3;
+    color: #1976D2;
+}
+
+.log-success {
+    background-color: #e8f5e8;
+    border-left-color: #4CAF50;
+    color: #388E3C;
+}
+
+.log-warning {
+    background-color: #fff3e0;
+    border-left-color: #FF9800;
+    color: #F57C00;
+}
+
+.log-error {
+    background-color: #ffebee;
+    border-left-color: #f44336;
+    color: #D32F2F;
+}
+
+.log-execution {
+    background-color: #f3e5f5;
+    border-left-color: #9C27B0;
+    color: #7B1FA2;
+}
+
+.log-connection {
+    background-color: #e8eaf6;
+    border-left-color: #3F51B5;
+    color: #303F9F;
+}
+
+/* 拖拽中的块样式 */
+.dragging {
+    position: absolute;
+    z-index: 1000;
+    opacity: 0.8;
+    cursor: grabbing;
+    transform: scale(1.1);
+}
+
+/* 工作区中的块 */
+.workspace-block {
+    position: absolute;
+    cursor: move;
+    transition: all 0.2s ease;
+}
+
+.workspace-block:hover {
+    transform: scale(1.02);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+.workspace-block.selected {
+    outline: 2px solid #2196F3;
+    outline-offset: 2px;
+}
+
+.workspace-block.connected {
+    border-top: 2px dashed #3F51B5;
+}
+
+/* 连接点 */
+.connection-point {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background-color: #fff;
+    border: 2px solid #333;
+    border-radius: 50%;
+}
+
+.top-connection {
+    top: -4px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.bottom-connection {
+    bottom: -4px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+/* 容器型积木样式 */
+.container-block {
+    display: flex;
+    flex-direction: column;
+    min-height: 80px;
+    padding: 0;
+    background: linear-gradient(135deg, #FF5722, #D84315);
+}
+
+.block-header {
+    padding: 8px 12px;
+    background: inherit;
+    border-radius: 4px 4px 0 0;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.block-container {
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 2px dashed rgba(255, 255, 255, 0.3);
+    border-radius: 4px;
+    margin: 4px 8px;
+    min-height: 40px;
+    display: flex;
+    flex-direction: column;
+    padding: 4px;
+    position: relative;
+}
+
+.block-container.has-blocks {
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+.container-placeholder {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 10px;
+    text-align: center;
+    align-self: center;
+    margin: auto;
+    pointer-events: none;
+}
+
+.block-footer {
+    height: 8px;
+    background: inherit;
+    border-radius: 0 0 4px 4px;
+    position: relative;
+}
+
+.block-footer::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 20px;
+    height: 4px;
+    background: inherit;
+    border-radius: 2px;
+}
+
+/* 积木输入框通用样式 */
+.repeat-input, .wait-input, .x-input, .y-input, .duration-input, .say-duration, .size-change {
+    background: rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 3px;
+    color: white;
+    width: 40px;
+    padding: 2px 4px;
+    font-size: 11px;
+    text-align: center;
+}
+
+.say-text {
+    background: rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 3px;
+    color: white;
+    width: 60px;
+    padding: 2px 4px;
+    font-size: 11px;
+    text-align: center;
+}
+
+.condition-select {
+    background: rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 3px;
+    color: white;
+    padding: 2px 4px;
+    font-size: 11px;
+}
+
+.repeat-input:focus, .wait-input:focus, .x-input:focus, .y-input:focus, 
+.duration-input:focus, .say-text:focus, .say-duration:focus, .size-change:focus,
+.condition-select:focus {
+    outline: none;
+    background: rgba(255, 255, 255, 0.3);
+}
+
+/* 可编辑积木样式 */
+.editable-block {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    flex-wrap: wrap;
+}
+
+/* 容器内的积木样式 */
+.block-container .workspace-block {
+    position: relative !important;
+    transform: none !important;
+    left: auto !important;
+    top: auto !important;
+    margin: 2px 0;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* 拖拽到容器时的样式 */
+.block-container.drag-over {
+    border-color: #FFE0B2;
+    background-color: rgba(255, 224, 178, 0.2);
+}
+
+/* 删除区域激活时的样式 */
+.block-categories.delete-zone-active {
+    background-color: #ffebee;
+    border: 2px dashed #f44336;
+    box-shadow: 0 0 20px rgba(244, 67, 54, 0.3);
+    transition: all 0.3s ease;
+}
+
+.block-categories.delete-zone-active::before {
+    content: '🗑️ 删除区域';
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #f44336;
+    color: white;
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: bold;
+    z-index: 1000;
+    animation: deleteZonePulse 1s infinite;
+}
+
+@keyframes deleteZonePulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+}
+
+/* 删除提示样式 */
+.delete-hint {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #f44336;
+    color: white;
+    padding: 12px 20px;
+    border-radius: 25px;
+    font-size: 16px;
+    font-weight: bold;
+    z-index: 2000;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    animation: hintFadeIn 0.3s ease;
+    pointer-events: none;
+}
+
+@keyframes hintFadeIn {
+    from {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.8);
+    }
+    to {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+}
+
+/* 删除区域激活时的积木类别样式 */
+.block-categories.delete-zone-active .category {
+    opacity: 0.3;
+    pointer-events: none;
+}
+
+.block-categories.delete-zone-active .block {
+    opacity: 0.2;
+}
+
+/* 响应式设计 */
+@media (max-width: 1024px) {
+    .block-categories {
+        width: 200px;
+    }
+    
+    .stage {
+        width: 250px;
+    }
+}
+
+@media (max-width: 768px) {
+    .main-content {
+        flex-direction: column;
+    }
+    
+    .block-categories {
+        width: 100%;
+        height: 150px;
+        border-right: none;
+        border-bottom: 2px solid #ddd;
+    }
+    
+    .stage {
+        width: 100%;
+        height: 200px;
+    }
+    
+    .workspace {
+        height: 300px;
+    }
+}
