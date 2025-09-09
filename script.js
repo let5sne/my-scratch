@@ -5,6 +5,8 @@ class ScratchClone {
         this.workspace = document.getElementById('workspace');
         this.sprite = document.getElementById('sprite');
         this.runtimeLog = document.getElementById('runtime-log');
+        this.runBtn = document.getElementById('run-btn');
+        this.stopBtn = document.getElementById('stop-btn');
         this.blockConnection = new BlockConnection();
         this.blockConnection.setScratchClone(this);
         this.isDragging = false;
@@ -27,6 +29,30 @@ class ScratchClone {
         this.setupDeleteFunctionality();
         this.setupRuntimeLogging();
         this.updateSpritePosition();
+        this.updateButtonStates(); // 初始化按钮状态
+    }
+
+    // 更新按钮状态
+    updateButtonStates() {
+        if (this.isRunning) {
+            // 程序正在运行
+            this.runBtn.disabled = true;
+            this.runBtn.classList.add('running');
+            this.runBtn.textContent = '▶ 运行中...';
+            
+            this.stopBtn.disabled = false;
+            this.stopBtn.classList.add('active');
+            this.stopBtn.textContent = '⏹ 停止';
+        } else {
+            // 程序未运行
+            this.runBtn.disabled = false;
+            this.runBtn.classList.remove('running');
+            this.runBtn.textContent = '▶ 运行';
+            
+            this.stopBtn.disabled = true;
+            this.stopBtn.classList.remove('active');
+            this.stopBtn.textContent = '⏹ 停止';
+        }
     }
 
     // 设置拖拽功能
@@ -629,8 +655,8 @@ class ScratchClone {
         if (this.isRunning) return;
         
         this.isRunning = true;
+        this.updateButtonStates(); // 更新按钮状态
         this.logRuntime('开始运行代码...', 'execution');
-        console.log('开始运行代码...');
         
         const workspaceBlocks = this.workspace.querySelectorAll('.workspace-block');
         
@@ -671,17 +697,25 @@ class ScratchClone {
         }
         
         this.isRunning = false;
+        this.updateButtonStates(); // 更新按钮状态
         if (this.isRunning === false) {
             this.logRuntime('代码运行完成', 'success');
         }
-        console.log('代码运行完成');
     }
 
     // 停止代码
     stopCode() {
+        if (!this.isRunning) return; // 如果没有运行则不执行
+        
         this.isRunning = false;
+        this.updateButtonStates(); // 更新按钮状态
         this.logRuntime('代码运行已停止', 'warning');
-        console.log('停止运行');
+        
+        // 添加停止动画效果
+        this.stopBtn.style.animation = 'stopClicked 0.3s ease';
+        setTimeout(() => {
+            this.stopBtn.style.animation = '';
+        }, 300);
     }
 
     // 执行连接链
